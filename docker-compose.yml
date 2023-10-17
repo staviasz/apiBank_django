@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  django_bank:
+    container_name: django_bank
+    build: 
+      context: .
+    ports:
+      - 8000:8000
+    volumes:
+      - ./app:/app
+    env_file:
+      - ./dotenv/.env
+    depends_on:
+      - psql
+    
+
+  psql:
+    container_name: psql
+    image: postgres:13-alpine
+    volumes:
+      - ./data/postgres/data:/var/lib/postgresql/data/
+    env_file:
+      - ./dotenv/.env
+    ports:
+      - 5433:5432
